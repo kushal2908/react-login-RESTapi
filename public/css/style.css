@@ -2,3 +2,29 @@
   height: 100%;
   background-color: #222222;
 }
+
+.login-text {
+  font-weight: 300;
+}
+
+.collapse-inner .collapse-item {
+  color: #bababa !important;
+  font-weight: 500;
+  font-size: 13px;
+}
+.collapse-item:hover {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  transition: 300ms;
+}
+
+.table-header {
+  font-size: 12px;
+}
+.table-header td {
+  font-size: 12px;
+}
+
+.exchnage-house-table {
+  font-size: 13px;
+}

@@ -17,7 +17,7 @@ function Login(props) {
         setError(null);
         setLoading(true);
         
-        axios.post("http://blogservice.herokuapp.com/api/login", {username:username.value, password:password.value})
+        axios.post("http://localhost:8000/api/token", {username:username.value, password:password.value})
         .then(response => {
             setLoading(false);
             setUserSession(response.data.token, response.data);
@@ -32,7 +32,7 @@ function Login(props) {
             else {
                 setError ( 
                     <div className="alert alert-warning shadow-sm"> 
-                        <p className="font-weight-bold"> username or password didnt match </p> 
+                        <p className="small font-weight-bold text-danger"> username or password did not match </p> 
                     </div> );
             }                
         });       
@@ -50,8 +50,14 @@ function Login(props) {
                                     <div class="col-lg-12">
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h1 text-gray-900 mb-4">Login</h1>
+                                                <h1 class="h1 text-gray-900 mb-4 login-text">Login</h1>
                                             </div>
+                                            {
+                                                    error  &&                                   
+                                                    <>
+                                                        {error}
+                                                    </>                                       
+                                                }  
                                             <form class="user">
                                                 <div class="form-group">
                                                     <input 
@@ -70,12 +76,7 @@ function Login(props) {
                                                         {...password}
                                                     />
                                                 </div> 
-                                                {
-                                                    error  &&                                   
-                                                    <>
-                                                        {error}
-                                                    </>                                       
-                                                }                                          
+                                                                                        
                                                 <input 
                                                     type="button" 
                                                     class="btn btn-primary btn-user btn-block"
