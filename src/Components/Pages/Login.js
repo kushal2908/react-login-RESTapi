@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
 import { getUser, setUserSession } from '../utils/Common';
 import axios from 'axios'
-import { Redirect } from 'react-router-dom';
-
 
 function Login(props) {
 
@@ -17,7 +15,7 @@ function Login(props) {
         setError(null);
         setLoading(true);
         
-        axios.post("http://localhost:8000/api/token", {username:username.value, password:password.value})
+        axios.post("/token", {username:username.value, password:password.value})
         .then(response => {
             setLoading(false);
             setUserSession(response.data.token, response.data);
@@ -32,7 +30,7 @@ function Login(props) {
             else {
                 setError ( 
                     <div className="alert alert-warning shadow-sm"> 
-                        <p className="small font-weight-bold text-danger"> username or password did not match </p> 
+                        <p className="small font-weight-bold text-danger mb-0"> username or password did not match </p> 
                     </div> );
             }                
         });       

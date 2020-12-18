@@ -9,12 +9,14 @@ import Dashboard from "./Components/Pages/Dashboard";
 import CreateUser from "./Components/Pages/Screens/User/CreateUser";
 
 // Configuaration
-import ExchangeHouseInformation from "./Components/Pages/Screens/Configuration/ExchangeHouseInformation";
+import ExchangeHouseInformation from "./Components/Pages/Screens/Configuration/ExchangeHouse/ExchangeHouseInformation";
 import ExchangeRate from "./Components/Pages/Screens/Configuration/ExchangeRate";
+import ExchangeHouseAdd from "./Components/Pages/Screens/Configuration/ExchangeHouse/ExchangeHouseAdd";
+import ExchangeHouseInformationEdit from "./Components/Pages/Screens/Configuration/ExchangeHouse/ExchangeHouseInformationEdit";
 
 import Chart from "./Components/Pages/Screens/Chart";
 import Table from "./Components/Pages/Screens/Table";
-import ExchangeHouseAdd from "./Components/Pages/Screens/Configuration/ExchangeHouseAdd";
+
 
 
 function App() {
@@ -29,7 +31,8 @@ function App() {
 
           <NavLink activeClassName='active' to="/exchange-rate"> </NavLink>
           <NavLink activeClassName='active' to="/exchange-house-information"> </NavLink>
-          <NavLink activeClassName='active' to="/exchange-house-add"> </NavLink>
+          <NavLink activeClassName='active' to="/exchange-house-information/add"> </NavLink>
+          <NavLink activeClassName='active' to="/exchange-house-information-edit"> </NavLink>
 
           <NavLink activeClassName='active' to="/chart"> </NavLink>
           <NavLink activeClassName='active' to="/table"> </NavLink>
@@ -41,9 +44,11 @@ function App() {
 
           <PrivateRoute path='/user' component={CreateUser}  exact />
 
+          {/* CONFIG */}
           <PrivateRoute path='/exchange-rate' component={ExchangeRate}  exact />
           <PrivateRoute path='/exchange-house-information' component={ExchangeHouseInformation}  exact />
-          <PrivateRoute path='/exchange-house-add' component={ExchangeHouseAdd}  exact />
+          <PrivateRoute path='/exchange-house-information-add' component={ExchangeHouseAdd}  exact />
+          <PrivateRoute path='/exchange-house-information-edit'  component={ExchangeHouseInformationEdit}  exact />
 
           <PrivateRoute path='/chart' component={Chart }  exact />
           <PrivateRoute path='/table' component={Table }  exact />

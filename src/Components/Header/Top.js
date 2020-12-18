@@ -1,6 +1,8 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {getUser, removeUserSession} from '../utils/Common'
 import {Link} from 'react-router-dom'
+
+import SweetAlert from 'react-bootstrap-sweetalert';
     
 function Top(props) {
 
@@ -8,6 +10,15 @@ function Top(props) {
     const handleLogout = () => {
         removeUserSession();        
     } 
+
+    //Logout MODAL
+    const {
+        className
+      } = props
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
+
 
     return (
         <div id="content">
@@ -64,7 +75,8 @@ function Top(props) {
                         <Link class="dropdown-item text-danger font-weight-bold" data-toggle="modal" data-target="#logoutModal" onClick={handleLogout}>                           
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400 text-danger font-weight-bold"></i>
                             Logout                           
-                        </Link>                        
+                        </Link>
+
                     </div>
 
 

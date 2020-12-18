@@ -1,8 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 
-import {getToken} from '../../../utils/Common'
-import Layout from '../../../Header/Layout'
+import Layout from '../../../../Header/Layout'
 import { Link } from 'react-router-dom'
 
 function ExchangeHouseInformation() {
@@ -14,7 +13,6 @@ function ExchangeHouseInformation() {
         axios.get('/exchangehouse')
         .then(res=> {
             setHouses(res.data)
-            console.log(res.data)
         }).catch((err)=>console.log(err))
         
     }, [])
@@ -23,10 +21,7 @@ function ExchangeHouseInformation() {
         <div>
             <Layout>
 
-                
-
                 <div class="card shadow mb-4">
-
                     <div class="card-header py-3">
                         <div className="module-header text-dark bg-light" >
                             <div className="row align-items-center">
@@ -35,7 +30,7 @@ function ExchangeHouseInformation() {
                                     <p>List of exchange houses</p>
                                 </div>                        
                                 <div className="col-md-6 text-right ">
-                                    <Link to="/exchange-house-add" className="btn btn-primary shadow" > 
+                                    <Link to="/exchange-house-information-add" className="btn btn-primary shadow" > 
                                         <i class="fas fa-plus fa-fw mr-1"></i>
                                         Add Exchange House
                                     </Link>
@@ -47,9 +42,9 @@ function ExchangeHouseInformation() {
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered exchnage-house-table" id="dataTable" width="100%">
+                            <table class="table exchnage-house-table" id="dataTable" width="100%">
                                 <thead className="bg-light text-info">
-                                    <tr>                                       
+                                    <tr className="text-center" style={{fontSize:"14px"}}>                                       
                                         <th>Name</th>
                                         <th>Exchange House ID</th>
                                         <th>Exchange House Account Number</th>                                                                                                                        
@@ -72,7 +67,16 @@ function ExchangeHouseInformation() {
                                                 <td> {house.routing_number}</td>                                                
                                                 <td> {house.FC_bank_account}</td>                                                
                                                 <td> {house.incentive_GL}</td>                                                
-                                                <td> {house.com_rate}</td>                                            
+                                                <td> {house.com_rate}</td> 
+                                                <td  className="text-center d-flex" style={{border: "none "}} > 
+                                                    <Link to={`/exchange-house-information-edit`} className="btn btn-info mx-1 rounded-pill shadow-sm"> 
+                                                        <i class="fas fa-pen-square"></i> 
+                                                    </Link> 
+                                                    <button className="btn btn-danger shadow-sm rounded-pill">
+                                                        <i class="far fa-trash-alt"></i>  
+                                                    </button>                                              
+                                                </td>                                           
+                                                                                       
                                             </tr>
                                         </tbody>
                                     ))
