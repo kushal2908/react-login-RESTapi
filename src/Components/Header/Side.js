@@ -21,7 +21,7 @@ function Side() {
                 </li>          
 
                 <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" >
+                    <a className="nav-link collapsed" href="!" data-toggle="collapse" data-target="#collapseOne" >
                         <i className="fas fa-users"></i>
                         <span>User Management</span>
                     </a>
@@ -32,14 +32,14 @@ function Side() {
                     </div>
                 </li>                
                 <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" >
+                    <a className="nav-link collapsed" href="!" data-toggle="collapse" data-target="#collapseTwo" >
                         <i className="fas fa-fw fa-cog"></i>
                         <span>Configuration</span>
                     </a>
                     <div id="collapseTwo" className="collapse" >
                         <div className="bg-transparent py-2 collapse-inner rounded">
                             <Link to="/exchange-rate" className="collapse-item text-white ">Exchange Rate</Link>
-                            <Link className="collapse-item text-white " to="/exchange-house-information">Exchange House Information </Link>
+                            <Link className="collapse-item text-white " to="/exchange-house-information">Exchange House <br/> Information </Link>
                         </div>
                     </div>
                 </li>                

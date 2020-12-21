@@ -1,293 +1,192 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Layout from '../../../../Header/Layout'
-import { Link } from 'react-router-dom';
+import Layout from "../../../../Header/Layout";
+import { Link, useParams } from "react-router-dom";
 
 function ExchangeHouseInformationEdit(props) {
+  const { id } = useParams();
 
-    const name = useFormInput('');
-    const mobile_Num = useFormInput('');
-    const address = useFormInput('');
-    const bank_ac_num = useFormInput('');
-    const cash_gl = useFormInput('');
-    const nostro_ac = useFormInput('');
-    const ex_house_id = useFormInput('');
-    const manual_data_upload = useFormInput('');
-    const rcv_other_ex_house = useFormInput('');
-    const score = useFormInput('');
-    const incentive_gl = useFormInput('');
-    const routing_num = useFormInput('');
-    const commission_rate = useFormInput('');
-    const vat = useFormInput('');
-    
-    const[success, setSuccess] = useState(null)
+  const [getHouses, setGetHouses] = useState({});
 
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+  //AXIOS EDIT LOGIC
+  const handleExchangeHouseEdit = (e) => {
+    e.preventDefault();
+    axios
+      .put(`/exchangehouse/${id}/`, getHouses)
+      .then((res) => {
+        props.history.push("/exchange-house-information");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    const [getHouses, setGetHouses] = useState('');
-    useEffect(() => {
-        axios.get('/exchagehouse/', ExchangeHouseInformationEdit)
-        .then(res=>{
-            setGetHouses(res.data)
-            console.log(res.data)
-        })
-        .catch(err=>err)        
-    }, [])
+  //EDIT HOUSE CODE
+  const loadHouse = async () => {
+    const result = await axios.get(`/exchangehouse/${id}/`);
+    setGetHouses(result.data);
+  };
 
-    
+  const onInputChange = (e, key) => {
+    const v = e.target.value;
+    const t = JSON.parse(JSON.stringify(getHouses));
+    t[key] = v;
+    setGetHouses(t);
+  };
 
-    const handleExhacheHouseAdd = () => {
-        setError(null);
-        setLoading(true);        
+  useEffect(() => {
+    loadHouse();
+  }, []);
 
-        const exchange_house_values = {
-            company_name:name.value,
-            mobile_number:mobile_Num.value,
-            address:address.value,
-            bank_account_number:bank_ac_num.value,
-            cash_GL: cash_gl.value,
-            FC_bank_account: nostro_ac.value,
-            MTO_id: ex_house_id.value,
-            is_manual_data_upload_managed: manual_data_upload.value,
-            received_from_others_mto: rcv_other_ex_house.value,
-            namematchingscore:score.value,
-            incentive_GL: incentive_gl.value,
-            routing_number: routing_num.value,
-            com_rate:commission_rate.value,
-            vat: vat.value            
-        }
+  return (
+    <div>
+      <Layout>
+        <Link to="/exchange-house-information" className="btn btn-info mb-3 shadow">
+          <i class="fas fa-chevron-left mr-1 fa-fw"></i>
+          Back
+        </Link>
 
-        axios.put('/exchangehouse/', exchange_house_values )
-        .then(res=> {
-            setLoading(false);
-            setSuccess(
-                <div className="alert alert-success shadow-sm "  role="alert">
-                    <p className="m-0 font-weight-bold text-center"> Exchange House Information Successfully Edited </p>
-                </div>
-            )
-        })
-        .catch(error => {
-            setLoading(false)
-            if(error.response.status === 401){
-                setError(error.response.data.message); 
-            }
-            else {
-                setError (
-                    <div className="alert alert-danger shadow-sm"  role="alert"> 
-                        <p className="font-weight-bold text-danger text-center mb-0"> Error!... please check the values again </p> 
+        <div class="card o-hidden border-0 shadow-lg m-auto " style={{ width: "100%" }}>
+          <div className="card-header">
+            <h2 className="text-info" style={{ fontWeight: "600" }}>
+              Update Exchange House Information
+            </h2>
+          </div>
+          <div class="card-body p-0">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="p-4">
+                  <form>
+                    <div class="form-group">
+                      <label className="h6 "> Exchange House Name </label>
+                      <input type="text" class="form-control form-control-user" required value={getHouses.company_name} onChange={(e) => onInputChange(e, "company_name")} />
                     </div>
-                )
-            }
-        })
-    }
 
+                    <div className="form-group row">
+                      <div class="form-group col-md-6">
+                        <label className="h6 "> Mobile Number </label>
+                        <input type="text" class="form-control form-control-user" value={getHouses.mobile_number} onChange={(e) => onInputChange(e, "mobile_number")} />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label className="h6 "> Address </label>
+                        <textarea type="text" class="form-control form-control-user" value={getHouses.address} onChange={(e) => onInputChange(e, "address")} />
+                      </div>
+                    </div>
 
-    return (
-        <div>
-            <Layout>
+                    <div className="form-group row">
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Bank Account Number </label>
+                        <input
+                          type="text"
+                          class="form-control form-control-user"
+                          required
+                          value={getHouses.bank_account_number}
+                          onChange={(e) => onInputChange(e, "bank_account_number")}
+                        />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Cash GL </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.cash_GL} onChange={(e) => onInputChange(e, "cash_GL")} />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Nostro Account </label>
+                        <input
+                          type="text"
+                          class="form-control form-control-user"
+                          required
+                          value={getHouses.FC_bank_account}
+                          onChange={(e) => onInputChange(e, "FC_bank_account")}
+                        />
+                      </div>
+                    </div>
 
-                <Link to="/exchange-house-information" className="btn btn-info mb-3 shadow">
-                    <i class="fas fa-chevron-left mr-1 fa-fw"></i>
-                        Back
-                </Link>
-
-                <div class="card o-hidden border-0 shadow-lg m-auto " style={{width: "100%"}} >
-                    <div class="card-body p-0">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="p-5">  
-                                    <h2 className="text-info mb-3 py-2 border-bottom" style={{fontWeight:'400'}}>
-                                        Update Exchange House Table
-                                    </h2> 
-
-                                    <form className="">
-                                        <div class="form-group">
-                                            <label className="h6 "> Exchange House Name </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                {...name}
-                                                requireds
-                                                value={getHouses.company_name}
-                                                
-                                                
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Mobile Number </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user"
-                                                {...mobile_Num} 
-                                                
-
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Address </label>
-                                            <textarea 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                {...address}
-                                                
-                                            />
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label className="h6 "> Bank Account Number </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...bank_ac_num}
-                                                
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Cash GL </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user"   
-                                                {...cash_gl}                                             
-                                                required
-                                                
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Nostro Account </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user"
-                                                {...nostro_ac} 
-                                                required
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Exchange House ID </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                {...ex_house_id}
-                                                required
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Is Manual Data Upload Managed </label>
-                                                <div class="input-group mb-3">
-                                                    <select class="custom-select" { ...manual_data_upload} >
-                                                        <option selected>.....</option>
-                                                        <option value="1" label="Yes"   />
-                                                        <option value="2" label="No" /> 
-                                                                                             
-                                                    </select>
-                                                </div>                                           
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Received from other exchange house </label>
-                                                <div class="input-group mb-3">
-                                                    <select class="custom-select" { ...rcv_other_ex_house} >
-                                                        <option selected>.....</option>
-                                                        <option value="1" label="Yes"  />
-                                                        <option value="2" label="No" />                                                                                                                                                             
-                                                    </select>
-                                                </div>                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Score </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...score}
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Incentive GL </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...incentive_gl}
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Routing Number </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...routing_num}
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> Commission Rate </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...commission_rate}
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label className="h6 "> VAT (%) </label>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-user" 
-                                                required
-                                                {...vat}
-                                            />
-                                        </div>
-                                        {
-                                            error && 
-                                            <>
-                                                {error}
-                                            </>
-                                        }
-                                  
-                                        <input 
-                                            type="button"
-                                            className="btn btn-info btn-block shadow"                                        
-                                            value={loading?"Adding House...": "Update"}
-                                            onClick={handleExhacheHouseAdd}
-                                            disable={loading}
-                                            style={{ 
-                                                width:"40%",
-                                                fontSize:"16px",
-                                                letterSpacing: "1px"
-                                            }} 
-                                            
-                                        />
-    
-                                    </form>
-                                </div>
-
-                            </div>
+                    <div className="form-group row">
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Exchange House ID </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.MTO_id} onChange={(e) => onInputChange(e, "MTO_id")} />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Is Manual Data Upload Managed </label>
+                        <div class="input-group mb-3">
+                          <select class="custom-select" value={getHouses.is_manual_data_upload_managed} onChange={(e) => onInputChange(e, "is_manual_data_upload_managed")}>
+                            <option selected>.....</option>
+                            <option value="1" label="Yes" />
+                            <option value="2" label="No" />
+                          </select>
                         </div>
-                    </div>                   
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Received from other exchange house </label>
+                        <div class="input-group mb-3">
+                          <select class="custom-select" value={getHouses.received_from_others_mto} onChange={(e) => onInputChange(e, "received_from_others_mto")}>
+                            <option selected>.....</option>
+                            <option value="1" label="Yes" />
+                            <option value="2" label="No" />
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Score </label>
+                        <input
+                          type="text"
+                          class="form-control form-control-user"
+                          required
+                          value={getHouses.namematchingscore}
+                          onChange={(e) => onInputChange(e, "namematchingscore")}
+                        />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Incentive GL </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.incentive_GL} onChange={(e) => onInputChange(e, "incentive_GL")} />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label className="h6 "> Routing Number </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.routing_number} onChange={(e) => onInputChange(e, "routing_number")} />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div class="form-group col-md-6">
+                        <label className="h6 "> Commission Rate </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.com_rate} onChange={(e) => onInputChange(e, "com_rate")} />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label className="h6 "> VAT (%) </label>
+                        <input type="text" class="form-control form-control-user" required value={getHouses.vat} onChange={(e) => onInputChange(e, "vat")} />
+                      </div>
+                    </div>
+                    {/* {error && <>{error}</>} */}
+                    <div className="row">
+                      <div className="col-md-2 mb-2">
+                        <button
+                          //to="/exchange-house-information"
+                          type="submit"
+                          className="btn btn-primary btn-block shadow"
+                          //value={loading ? "Updating House..." : "Update"}
+                          onClick={handleExchangeHouseEdit}
+                          //<i class="far fa-edit mr-2 m"></i>
+                        >
+                          Update
+                        </button>
+                      </div>
+
+                      <div className="col-md-2">
+                        <Link to="/exchange-house-information" className="btn btn-secondary btn-block shadow">
+                          <i class="far fa-window-close mr-2"></i>
+                          Cancel
+                        </Link>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-
-
-
-
-            </Layout>            
+              </div>
+            </div>
+          </div>
         </div>
-    )
+      </Layout>
+    </div>
+  );
 }
 
-const useFormInput = initialValue => {
-
-    const [value, setValue ] = useState(initialValue)
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        setValue(e.target.value)
-    }
-    return {
-        value,
-        onChange: handleSubmit
-      }   
-
-}
-
-export default ExchangeHouseInformationEdit
+export default ExchangeHouseInformationEdit;
