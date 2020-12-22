@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
 import Layout from "../../../../Header/Layout";
 import { Link } from "react-router-dom";
+import { httpGeneral } from "../../../../../config";
+
+import SweetAlert from "react-bootstrap-sweetalert";
 
 function ExchangeHouseInformation(props) {
   const [loading, setLoading] = useState(false);
   const [houses, setHouses] = useState([]);
+  /////////////////////
+  //SEARCH FILTER HOOKS
+  /////////////////////
+  const [filter, setFilter] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchHouses();
@@ -14,15 +20,24 @@ function ExchangeHouseInformation(props) {
 
   const fetchHouses = async () => {
     setLoading(true);
-    const res = await axios.get("/exchangehouse");
+    const res = await httpGeneral.get("/exchangehouse");
     setLoading(false);
     setHouses(res.data.reverse());
   };
 
   const deleteHouse = async (id) => {
-    await axios.delete(`exchangehouse/${id}/`);
+    await httpGeneral.delete(`exchangehouse/${id}/`);
     fetchHouses();
   };
+
+  //FOR SEACH
+  useEffect(() => {
+    //setFilter(houses.filter((house) => house.company_name.toLowerCase().includes(search.toLowerCase())));
+    setFilter(houses.filter((house) => house.company_name.toLowerCase().includes(search.toLowerCase())));
+  }, [search, houses]);
+  console.log();
+
+  //DELETE-POP-UP
 
   return (
     <div>
@@ -46,6 +61,12 @@ function ExchangeHouseInformation(props) {
           </div>
 
           <div class="card-body">
+            <div className="input-group mb-3">
+              <div className="col-md-8"></div>
+              <div className="col-md-4 p-0">
+                <input onChange={(e) => setSearch(e.target.value)} className="form-control shadow-sm" placeholder="Search..." />
+              </div>
+            </div>
             <div class="table-responsive">
               <table class="table table-bordered exchnage-house-table" id="dataTable" width="100%">
                 <thead className="bg-light text-info">
@@ -61,7 +82,7 @@ function ExchangeHouseInformation(props) {
                     <th>Actions</th>
                   </tr>
                 </thead>
-                {houses.map((house) => (
+                {filter.map((house) => (
                   <tbody key={house.id} className="align-items-center">
                     <tr style={{ textAlign: "center", fontSize: "13px" }}>
                       <td> {house.company_name}</td>
@@ -72,12 +93,12 @@ function ExchangeHouseInformation(props) {
                       <td> {house.FC_bank_account}</td>
                       <td> {house.incentive_GL}</td>
                       <td> {house.com_rate}</td>
-                      <td className="text-center d-flex" style={{ border: "none " }}>
+                      <td className="text-center d-flex" style={{ border: "none" }}>
                         <Link to={`/exchange-house-information-edit-${house.id}`} className="btn btn-sm btn-warning mx-1 rounded-pill shadow">
                           <i class="fas fa-pen-square"></i>
                         </Link>
                         <Link className="btn btn-danger btn-sm rounded-pill shadow" onClick={() => deleteHouse(house.id)}>
-                          <i class="fas fa-trash"></i>
+                          <i class="fas fa-trash text-white"></i>
                         </Link>
                       </td>
                     </tr>
@@ -95,7 +116,7 @@ function ExchangeHouseInformation(props) {
 export default ExchangeHouseInformation;
 
 {
-  /* <Link className="btn btn-danger btn-sm" onClick={() => deleteHouse(house.id)}>
-  delete
+  /* <Link className="btn btn-danger btn-sm rounded-pill shadow" onClick={() => deleteHouse(house.id)}>
+  <i class="fas fa-trash"></i>
 </Link>; */
 }

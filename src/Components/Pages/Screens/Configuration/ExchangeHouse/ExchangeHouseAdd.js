@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { httpGeneral } from "../../../../../config";
 import { Link } from "react-router-dom";
 import Layout from "../../../../Header/Layout";
 
@@ -47,10 +47,11 @@ function ExchangeHouseAdd(props) {
       vat: vat.value,
     };
 
-    axios
+    httpGeneral
       .post("/exchangehouse", exchange_house_values)
       .then((res) => {
         setLoading(false);
+        props.history.push("/exchange-house-information");
         setSuccess(
           <div className="alert alert-success shadow-sm " role="alert">
             <p className="m-0 font-weight-bold text-center"> Exchange House Information Successfully Added </p>
@@ -93,7 +94,7 @@ function ExchangeHouseAdd(props) {
                   <form className="">
                     <div class="form-group">
                       <label className="h6 "> Exchange House Name </label>
-                      <input type="text" class="form-control form-control-user" {...name} autoFocus required />
+                      <input type="text" class="form-control form-control-user" {...name} autoFocus />
                     </div>
 
                     <div className="form-group row">
@@ -165,11 +166,11 @@ function ExchangeHouseAdd(props) {
                     <div className="form-group row">
                       <div class="form-group col-md-6">
                         <label className="h6 "> Commission Rate </label>
-                        <input type="text" class="form-control form-control-user" {...commission_rate} />
+                        <input type="number" class="form-control form-control-user" {...commission_rate} />
                       </div>
                       <div class="form-group col-md-6">
                         <label className="h6 "> VAT (%) </label>
-                        <input type="text" class="form-control form-control-user" {...vat} />
+                        <input type="number" class="form-control form-control-user" {...vat} />
                       </div>
                     </div>
                     {error && <>{error}</>}

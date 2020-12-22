@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { httpGeneral } from "../../../../../config";
 import Layout from "../../../../Header/Layout";
 import { Link, useParams } from "react-router-dom";
 
@@ -11,7 +11,7 @@ function ExchangeHouseInformationEdit(props) {
   //AXIOS EDIT LOGIC
   const handleExchangeHouseEdit = (e) => {
     e.preventDefault();
-    axios
+    httpGeneral
       .put(`/exchangehouse/${id}/`, getHouses)
       .then((res) => {
         props.history.push("/exchange-house-information");
@@ -23,7 +23,7 @@ function ExchangeHouseInformationEdit(props) {
 
   //EDIT HOUSE CODE
   const loadHouse = async () => {
-    const result = await axios.get(`/exchangehouse/${id}/`);
+    const result = await httpGeneral.get(`/exchangehouse/${id}/`);
     setGetHouses(result.data);
   };
 
