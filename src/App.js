@@ -67,7 +67,7 @@ function App() {
           <PrivateRoute path="/exchange-house-information-edit-:id" component={ExchangeHouseInformationEdit} exact />
 
           <PrivateRoute path="/chart" component={Chart} exact />
-          <Route path="/table" component={Table} exact />
+          <PrivateRoute path="/table" component={Table} exact />
         </Switch>
       </BrowserRouter>
     </div>

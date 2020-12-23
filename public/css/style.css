@@ -1,10 +1,27 @@
+/* 
+###############################
+###### OVERWRITTEN CSS ########
+###############################
+*/
 .sidebar {
   height: 100%;
+  width: 250px !important;
   background-color: #222222;
+}
+.sidebar .nav-item .nav-link {
+  width: 100%;
+  padding: 20px 16px;
+}
+.sidebar .nav-item .nav-link span {
+  font-size: 14px;
 }
 
 .login-text {
   font-weight: 300;
+}
+
+.collapse-inner {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .collapse-inner .collapse-item {
@@ -12,10 +29,32 @@
   font-weight: 500;
   font-size: 13px;
 }
+
 .collapse-item:hover {
   background-color: transparent !important;
   color: #ffffff !important;
   transition: 300ms;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    height: 100%;
+    width: 120px !important;
+    background-color: #222222;
+  }
+
+  .sidebar .nav-item .nav-link {
+    width: 100%;
+    padding: 12px 8px;
+  }
+  .collapse-inner {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  .collapse-inner .collapse-item {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 13px;
+  }
 }
 
 .table-header {

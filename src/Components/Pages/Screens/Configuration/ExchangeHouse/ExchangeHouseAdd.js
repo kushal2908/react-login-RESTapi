@@ -87,7 +87,7 @@ function ExchangeHouseAdd(props) {
             </h2>
           </div>
 
-          <div class="card-body p-0 ">
+          <div class="card-body p-0">
             <div className="row">
               <div className="col-md-12">
                 <div className="p-4">
@@ -179,7 +179,7 @@ function ExchangeHouseAdd(props) {
                       <div className="col-md-2">
                         <button
                           type="submit"
-                          className="btn btn-primary btn-block shadow"
+                          className="btn btn-primary btn-block shadow mb-2"
                           value={loading ? "Adding House..." : "Create"}
                           onClick={handleExhacheHouseAdd}
                           disable={loading}>

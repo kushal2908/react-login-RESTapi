@@ -3,8 +3,6 @@ import Layout from "../../../../Header/Layout";
 import { Link } from "react-router-dom";
 import { httpGeneral } from "../../../../../config";
 
-import SweetAlert from "react-bootstrap-sweetalert";
-
 function ExchangeHouseInformation(props) {
   const [loading, setLoading] = useState(false);
   const [houses, setHouses] = useState([]);
@@ -46,12 +44,12 @@ function ExchangeHouseInformation(props) {
           <div class="card-header py-3">
             <div className="module-header text-dark bg-light">
               <div className="row align-items-center">
-                <div className="col-md-9">
-                  <h2 style={{ fontWeight: "500" }}> Exchange House Information </h2>
+                <div className="col-xl-8 col-sm-12">
+                  <h2 style={{ fontWeight: "900" }}> Exchange House Information </h2>
                   <p>List of exchange houses</p>
                 </div>
-                <div className="col-md-3 text-right ">
-                  <Link to="/exchange-house-information-add" className="btn btn-primary shadow">
+                <div className="col-xl-4 col-sm-12 text-right ">
+                  <Link to="/exchange-house-information-add" className="btn btn-primary btn-block shadow">
                     <i class="fas fa-plus fa-fw mr-1"></i>
                     Add Exchange House
                   </Link>
